@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SkipLink from '../components/SkipLink.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Servicios from '../components/Servicios.astro';
+import Enfoque from '../components/Enfoque.astro';
+import SobreMi from '../components/SobreMi.astro';
+import ComoEmpezar from '../components/ComoEmpezar.astro';
+import Instituciones from '../components/Instituciones.astro';
+import Videos from '../components/Videos.astro';
+import Faq from '../components/Faq.astro';
+import Contacto from '../components/Contacto.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { site } from '../config/site';
+import { buildPsychologistSchema, buildFaqSchema } from '../lib/schema';
+
+const title = `${site.nombreCompleto} — ${site.profesion} en ${site.ciudad}`;
+const description = `Psicoterapia para jóvenes y adultos desde el psicoanálisis y la psicoterapia focalizada. Consultorio en ${site.ciudad}, ${site.provincia}, o sesiones online.`;
+
+// Astro.site viene de "site" en astro.config.mjs; site.dominio es solo su
+// respaldo si por algún motivo no estuviera configurado.
+const siteUrl = Astro.site ?? new URL(site.dominio);
+---
+
+<Layout title={title} description={description} jsonLd={[buildPsychologistSchema(siteUrl), buildFaqSchema()]}>
+	<SkipLink />
+	<Header />
+	<main id="contenido">
+		<Hero />
+		<Servicios />
+		<Enfoque />
+		<SobreMi />
+		<ComoEmpezar />
+		<Instituciones />
+		<Videos />
+		<Faq />
+		<Contacto />
+	</main>
+	<Footer />
+	<WhatsAppFloat />
+</Layout>

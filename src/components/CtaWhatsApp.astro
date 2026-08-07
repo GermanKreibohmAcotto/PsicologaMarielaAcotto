@@ -1,0 +1,67 @@
+---
+import { buildWhatsAppUrl } from '../lib/whatsapp';
+
+/**
+ * Botón de contacto por WhatsApp. Cada llamador define su propio mensaje
+ * pre-cargado (props.mensaje) y su propio texto visible (slot), para que el
+ * CTA hable del contexto exacto desde el que se lo toca.
+ *
+ * `size` (no `class`) controla el tamaño: mezclar padding propio vía `class`
+ * competiría en especificidad con las utilidades internas y el resultado
+ * dependería del orden de generación del CSS, no del atributo HTML. `class`
+ * queda reservado para utilidades que no chocan con las internas (ancho, márgenes).
+ */
+interface Props {
+	mensaje: string;
+	variant?: 'primary' | 'terracota' | 'outline';
+	size?: 'md' | 'sm';
+	class?: string;
+}
+
+const { mensaje, variant = 'primary', size = 'md', class: className = '' } = Astro.props;
+const href = buildWhatsAppUrl(mensaje);
+
+const variantClasses: Record<string, string> = {
+	primary: 'bg-verde text-white hover:brightness-90 active:brightness-85',
+	terracota: 'bg-terracota-dark text-white hover:brightness-90 active:brightness-85',
+	outline: 'bg-transparent text-ink border-2 border-border-strong hover:bg-surface-alt',
+};
+
+const sizeClasses: Record<string, string> = {
+	md: 'px-6 py-3.5 text-base gap-2.5',
+	sm: 'px-4 py-2.5 text-sm gap-2',
+};
+
+const iconSizeClasses = size === 'sm' ? 'h-4 w-4' : 'h-5 w-5';
+---
+
+<a
+	href={href}
+	target="_blank"
+	rel="noopener noreferrer"
+	class:list={[
+		'inline-flex min-h-[44px] items-center justify-center rounded-pill font-semibold shadow-soft transition',
+		variantClasses[variant],
+		sizeClasses[size],
+		className,
+	]}
+>
+	<svg
+		aria-hidden="true"
+		focusable="false"
+		viewBox="0 0 24 24"
+		class:list={[iconSizeClasses, 'shrink-0']}
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	>
+		<path d="M4 4.5h16v12H9.5L5 20.5v-4H4z"></path>
+		<circle cx="9" cy="10.5" r="0.75" fill="currentColor" stroke="none"></circle>
+		<circle cx="12" cy="10.5" r="0.75" fill="currentColor" stroke="none"></circle>
+		<circle cx="15" cy="10.5" r="0.75" fill="currentColor" stroke="none"></circle>
+	</svg>
+	<span><slot /></span>
+	<span class="sr-only">(abre WhatsApp en una pestaña nueva)</span>
+</a>

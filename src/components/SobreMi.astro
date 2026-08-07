@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import mariela from '../assets/mariela.jpg';
+import Section from './Section.astro';
+import { site } from '../config/site';
+---
+
+<Section id="sobre-mi" eyebrow="Quién te acompaña" titulo={site.nombreCompleto} tono="base">
+	<div class="grid items-start gap-10 lg:grid-cols-[320px_1fr]">
+		<Image
+			src={mariela}
+			alt={`Retrato de ${site.nombreCompleto}`}
+			width={480}
+			class="w-full max-w-xs rounded-card shadow-soft lg:max-w-none"
+		/>
+		<div class="space-y-4 text-lg text-ink-soft">
+			<p>
+				Soy {site.profesion.toLowerCase()} ({site.matricula}), formada con orientación
+				psicoanalítica y formación complementaria en psicoterapia focalizada.
+			</p>
+			<p>
+				Trabajo con jóvenes y adultos en consulta individual, y con instituciones escolares en
+				evaluaciones psicodiagnósticas, capacitación y asesoramiento.
+			</p>
+			<p>
+				Cada proceso es distinto. Mi trabajo es sostener un espacio de confianza para que puedas
+				pensar lo que te pasa, a tu propio ritmo.
+			</p>
+			<!-- TODO: sumar formación académica específica (universidad, posgrados),
+			     años de trayectoria y especializaciones cuando estén disponibles. -->
+		</div>
+	</div>
+</Section>

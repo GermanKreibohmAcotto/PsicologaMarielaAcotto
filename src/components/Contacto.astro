@@ -1,0 +1,42 @@
+---
+import Section from './Section.astro';
+import CtaWhatsApp from './CtaWhatsApp.astro';
+import { site } from '../config/site';
+---
+
+<Section
+	id="contacto"
+	eyebrow="Contacto"
+	titulo="Coordinemos un primer encuentro"
+	tono="alt"
+	centrado
+>
+	<div class="mx-auto grid max-w-3xl gap-8 text-center sm:grid-cols-3 sm:text-left">
+		<div>
+			<h3 class="font-display text-lg text-ink">Consultorio</h3>
+			<p class="mt-2 text-ink-soft">
+				{site.ciudad}, {site.provincia}<br />
+				La dirección exacta se comparte al coordinar el turno.
+			</p>
+		</div>
+		<div>
+			<h3 class="font-display text-lg text-ink">Horarios</h3>
+			<ul class="mt-2 text-ink-soft">
+				{site.horarios.map((h) => (
+					<li>{h.etiqueta}: {h.horario}</li>
+				))}
+			</ul>
+		</div>
+		<div>
+			<h3 class="font-display text-lg text-ink">Modalidad</h3>
+			<p class="mt-2 text-ink-soft">Presencial en el consultorio, o por videollamada.</p>
+		</div>
+	</div>
+
+	<div class="mt-10 flex flex-col items-center gap-3">
+		<CtaWhatsApp mensaje="Hola Mariela, me gustaría consultar por una sesión.">
+			Escribime por WhatsApp
+		</CtaWhatsApp>
+		<p class="text-sm text-ink-soft">{site.whatsappDisplay}</p>
+	</div>
+</Section>

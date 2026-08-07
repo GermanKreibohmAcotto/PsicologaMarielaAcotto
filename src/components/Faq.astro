@@ -1,0 +1,39 @@
+---
+import Section from './Section.astro';
+import { faq } from '../config/site';
+---
+
+<Section id="preguntas-frecuentes" eyebrow="Dudas frecuentes" titulo="Preguntas frecuentes" tono="base">
+	<div class="mx-auto max-w-3xl divide-y divide-border">
+		{faq.map((item) => (
+			<details name="faq" class="group py-5">
+				<summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+					<h3 class="font-display text-lg font-medium text-ink">{item.pregunta}</h3>
+					<svg
+						aria-hidden="true"
+						focusable="false"
+						viewBox="0 0 24 24"
+						class="h-5 w-5 shrink-0 text-verde transition-transform duration-200 group-open:rotate-45"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+					>
+						<path d="M12 5v14M5 12h14"></path>
+					</svg>
+				</summary>
+				<p class="mt-3 text-ink-soft">{item.respuesta}</p>
+			</details>
+		))}
+	</div>
+</Section>
+
+<style>
+	/* Safari/Chrome agregan su propio marcador triangular al <summary>; se
+	   quita explícitamente porque el ícono +/× de arriba ya cumple esa función.
+	   (El reset de prefers-reduced-motion para la transición del ícono ya
+	   está cubierto globalmente en global.css.) */
+	summary::-webkit-details-marker {
+		display: none;
+	}
+</style>

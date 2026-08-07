@@ -1,0 +1,40 @@
+---
+/**
+ * Envoltorio común para cada bloque de la página: mismo ancho, mismo ritmo
+ * vertical, encabezado consistente. Todas las secciones usan <h2> — el único
+ * <h1> de la página vive en el Hero.
+ */
+interface Props {
+	id: string;
+	eyebrow?: string;
+	titulo: string;
+	descripcion?: string;
+	tono?: 'base' | 'alt' | 'warm';
+	centrado?: boolean;
+}
+
+const { id, eyebrow, titulo, descripcion, tono = 'base', centrado = false } = Astro.props;
+
+const tonoClase = {
+	base: 'bg-bg',
+	alt: 'bg-surface',
+	warm: 'bg-surface-warm',
+}[tono];
+
+const headingId = `${id}-titulo`;
+---
+
+<section id={id} class:list={['scroll-mt-24 py-16 md:py-24', tonoClase]} aria-labelledby={headingId}>
+	<div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+		<header class:list={['max-w-2xl', { 'mx-auto text-center': centrado }]}>
+			{eyebrow && (
+				<p class="mb-3 text-sm font-semibold tracking-wide text-verde uppercase">{eyebrow}</p>
+			)}
+			<h2 id={headingId} class="font-display text-3xl text-ink md:text-4xl">{titulo}</h2>
+			{descripcion && <p class="mt-4 text-lg text-ink-soft">{descripcion}</p>}
+		</header>
+		<div class="mt-10 md:mt-14">
+			<slot />
+		</div>
+	</div>
+</section>

@@ -1,0 +1,36 @@
+---
+import { site } from '../config/site';
+import { buildWhatsAppUrl } from '../lib/whatsapp';
+
+const anio = new Date().getFullYear();
+const href = buildWhatsAppUrl('Hola Mariela, me gustaría consultar por una sesión.');
+---
+
+<footer class="theme-oscuro bg-ink text-bg">
+	<div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+		<div class="flex flex-col gap-8 sm:flex-row sm:justify-between">
+			<div>
+				<p class="font-display text-lg">{site.nombreCompleto}</p>
+				<p class="mt-1 text-sm text-bg/70">{site.profesion} · {site.matricula}</p>
+			</div>
+			<div class="text-sm text-bg/70 sm:text-right">
+				<p>{site.ciudad}, {site.provincia}</p>
+				<p class="mt-1">
+					<a href={href} target="_blank" rel="noopener noreferrer" class="underline hover:text-white">
+						{site.whatsappDisplay}
+					</a>
+				</p>
+				{site.redes.instagram && (
+					<p class="mt-1">
+						<a href={site.redes.instagram} target="_blank" rel="noopener noreferrer" class="underline hover:text-white">
+							Instagram
+						</a>
+					</p>
+				)}
+			</div>
+		</div>
+		<p class="mt-10 border-t border-bg/20 pt-6 text-xs text-bg/70">
+			© {anio} {site.nombreCompleto}. Todos los derechos reservados.
+		</p>
+	</div>
+</footer>

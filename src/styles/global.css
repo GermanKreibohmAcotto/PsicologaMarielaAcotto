@@ -1,0 +1,115 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/inter";
+
+/**
+ * Paleta y tokens de diseño.
+ *
+ * Cada color está verificado contra WCAG 2.2 AA antes de usarse (ratios en el
+ * comentario de cada uno). Reglas de uso:
+ *
+ * - `terracota` es SOLO decorativo (iconos, bordes, fondos de acento) y nunca
+ *   va como texto ni como fondo detrás de texto: sobre `bg` da 2.96:1 y sobre
+ *   blanco 3.25:1, ambos por debajo del 4.5:1 que exige texto normal.
+ * - `terracota-dark` es la variante segura para texto o botones en ese tono
+ *   (5.08:1 sobre `bg`, 5.57:1 con texto blanco encima).
+ */
+@theme {
+  --color-bg: #f7f4ef;
+  --color-surface: #ffffff;
+  --color-surface-alt: #e9edec; /* ink 9.53:1 — tarjetas con tinte verde */
+  --color-surface-warm: #f9efeb; /* ink 9.95:1 — tarjetas con tinte terracota */
+
+  --color-ink: #2f3e38; /* 10.25:1 sobre bg, 11.25:1 sobre surface */
+  --color-ink-soft: #55655e; /* 5.61:1 sobre bg — texto secundario */
+
+  --color-verde: #4a6b5d; /* blanco encima: 5.91:1 */
+  --color-verde-dark: #3a5449; /* hover/active de botones verdes */
+
+  --color-terracota: #c97b5a; /* decorativo únicamente, ver nota arriba */
+  --color-terracota-dark: #9e5433; /* 5.08:1 sobre bg — variante para texto/botón */
+
+  --color-border: #bac4bc; /* divisores decorativos, no funcionales */
+  --color-border-strong: #758d82; /* 3.25:1 sobre bg — bordes con significado */
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+
+  --radius-card: 1.25rem;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 20px 40px -24px rgb(47 62 56 / 0.28);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  /* Foco visible en todo elemento interactivo: nunca se elimina el outline. */
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Sobre fondos oscuros (footer) un outline oscuro sería invisible. */
+  .theme-oscuro :focus-visible {
+    outline-color: var(--color-bg);
+  }
+
+  ::selection {
+    background-color: var(--color-verde);
+    color: white;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Oculta visualmente un texto sin quitarlo del árbol de accesibilidad:
+     contexto extra para lectores de pantalla (ej. "abre en pestaña nueva"),
+     o la etiqueta de un botón que solo muestra un ícono. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}

@@ -1,0 +1,38 @@
+---
+import { site } from '../config/site';
+import CtaWhatsApp from './CtaWhatsApp.astro';
+
+const links = [
+	{ href: '#servicios', label: 'Servicios' },
+	{ href: '#sobre-mi', label: 'Sobre mí' },
+	{ href: '#instituciones', label: 'Instituciones' },
+	{ href: '#preguntas-frecuentes', label: 'Preguntas frecuentes' },
+	{ href: '#contacto', label: 'Contacto' },
+];
+---
+
+<header class="sticky top-0 z-30 border-b border-border bg-bg/95 backdrop-blur">
+	<div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+		<a href="#inicio" class="font-display text-lg font-semibold text-ink">
+			{site.nombreCompleto}
+		</a>
+
+		<nav aria-label="Secciones de la página" class="hidden lg:block">
+			<ul class="flex items-center gap-6 text-sm font-medium text-ink">
+				{links.map((link) => (
+					<li>
+						<a href={link.href} class="transition-colors hover:text-verde">{link.label}</a>
+					</li>
+				))}
+			</ul>
+		</nav>
+
+		<CtaWhatsApp
+			mensaje="Hola Mariela, me gustaría consultar por una sesión."
+			size="sm"
+			class="shrink-0"
+		>
+			Escribime
+		</CtaWhatsApp>
+	</div>
+</header>

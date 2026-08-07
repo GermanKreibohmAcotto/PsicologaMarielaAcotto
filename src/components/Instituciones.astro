@@ -1,0 +1,32 @@
+---
+import Section from './Section.astro';
+import CtaWhatsApp from './CtaWhatsApp.astro';
+import { servicios } from '../config/site';
+
+const institucionales = servicios.filter((s) => s.audiencia === 'instituciones');
+---
+
+<Section
+	id="instituciones"
+	eyebrow="Para instituciones"
+	titulo="Trabajo junto a instituciones escolares"
+	descripcion="Evaluaciones, capacitación y asesoramiento para equipos docentes y directivos."
+	tono="warm"
+>
+	<ul class="grid gap-6 sm:grid-cols-3">
+		{institucionales.map((s) => (
+			<li class="rounded-card bg-surface p-6 shadow-soft">
+				<h3 class="font-display text-lg text-ink">{s.titulo}</h3>
+				<p class="mt-2 text-sm text-ink-soft">{s.descripcion}</p>
+			</li>
+		))}
+	</ul>
+	<div class="mt-10">
+		<CtaWhatsApp
+			mensaje="Hola, escribo desde una institución educativa por evaluaciones psicodiagnósticas."
+			variant="terracota"
+		>
+			Consultar como institución
+		</CtaWhatsApp>
+	</div>
+</Section>

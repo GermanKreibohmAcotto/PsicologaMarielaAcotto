@@ -1,0 +1,21 @@
+---
+import Section from './Section.astro';
+import { servicios } from '../config/site';
+---
+
+<Section
+	id="servicios"
+	eyebrow="Servicios"
+	titulo="Cómo puedo ayudarte"
+	descripcion="Atención a jóvenes y adultos, y trabajo junto a instituciones educativas."
+	tono="base"
+>
+	<ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+		{servicios.map((s) => (
+			<li class="rounded-card border border-border bg-surface p-6 shadow-soft">
+				<h3 class="font-display text-xl text-ink">{s.titulo}</h3>
+				<p class="mt-3 text-ink-soft">{s.descripcion}</p>
+			</li>
+		))}
+	</ul>
+</Section>

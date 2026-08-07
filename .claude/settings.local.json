@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(node scripts/generate-placeholders.mjs)",
+      "Bash(npx astro *)",
+      "Bash(node -p \"require\\('./node_modules/vite/package.json'\\).version\")",
+      "Bash(node -p \"require\\('./node_modules/astro/node_modules/vite/package.json'\\).version\")",
+      "Bash(npm ls *)",
+      "Bash(node -p \"require\\('./node_modules/astro/package.json'\\).dependencies.vite\")",
+      "Bash(node -p \"require\\('./node_modules/@tailwindcss/vite/package.json'\\).peerDependencies || require\\('./node_modules/@tailwindcss/vite/package.json'\\).dependencies\")",
+      "Bash(npm run *)",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

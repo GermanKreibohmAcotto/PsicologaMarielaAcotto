@@ -1,0 +1,45 @@
+---
+import Section from './Section.astro';
+
+const pasos = [
+	{
+		numero: '1',
+		titulo: 'Escribís por WhatsApp',
+		descripcion: 'Contás brevemente qué te trae a la consulta.',
+	},
+	{
+		numero: '2',
+		titulo: 'Coordinamos un primer encuentro',
+		descripcion: 'Buscamos día y horario según disponibilidad, presencial u online.',
+	},
+	{
+		numero: '3',
+		titulo: 'Nos conocemos',
+		descripcion: 'La primera entrevista sirve para pensar juntas cómo seguir.',
+	},
+];
+---
+
+<Section
+	id="como-empezar"
+	eyebrow="Primer paso"
+	titulo="Cómo empezar"
+	descripcion="Dar el primer paso suele ser lo más difícil. Esto es todo lo que hace falta."
+	tono="alt"
+	centrado
+>
+	<ol class="grid gap-10 sm:grid-cols-3">
+		{pasos.map((paso) => (
+			<li class="text-center sm:text-left">
+				<span
+					class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-terracota-dark font-display text-xl text-white sm:mx-0"
+					aria-hidden="true"
+				>
+					{paso.numero}
+				</span>
+				<h3 class="mt-4 font-display text-lg text-ink">{paso.titulo}</h3>
+				<p class="mt-2 text-ink-soft">{paso.descripcion}</p>
+			</li>
+		))}
+	</ol>
+</Section>

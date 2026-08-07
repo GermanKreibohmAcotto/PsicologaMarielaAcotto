@@ -1,0 +1,117 @@
+---
+import Section from './Section.astro';
+import { videos } from '../config/site';
+---
+
+<Section
+	id="videos"
+	eyebrow="Volver a Empezar"
+	titulo="Charlas sobre salud mental"
+	descripcion="Fragmentos del programa, con reflexiones sobre distintos temas de la vida cotidiana."
+	tono="alt"
+>
+	<div
+		id="videos-track"
+		role="region"
+		aria-label="Videos destacados"
+		tabindex="0"
+		class="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4"
+	>
+		{videos.map((video) => (
+			<div class="w-[280px] shrink-0 snap-start sm:w-[340px]">
+				<button
+					type="button"
+					class="video-card group relative block aspect-video w-full overflow-hidden rounded-card bg-ink shadow-soft"
+					data-video-id={video.id}
+					aria-label={`Reproducir video: ${video.titulo}`}
+				>
+					<img
+						src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+						alt=""
+						loading="lazy"
+						width="480"
+						height="360"
+						class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+					/>
+					<span class="absolute inset-0 flex items-center justify-center bg-ink/10">
+						<span class="flex h-14 w-14 items-center justify-center rounded-pill bg-verde/90 text-white shadow-soft transition-transform duration-200 group-hover:scale-110">
+							<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="ml-1 h-6 w-6" fill="currentColor">
+								<path d="M8 5v14l11-7z"></path>
+							</svg>
+						</span>
+					</span>
+				</button>
+				<p class="mt-3 font-display text-base text-ink">{video.titulo}</p>
+			</div>
+		))}
+	</div>
+	<div class="mt-2 flex justify-end gap-2">
+		<button type="button" id="videos-prev" class="slider-btn" aria-label="Video anterior">
+			<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M15 18l-6-6 6-6"></path>
+			</svg>
+		</button>
+		<button type="button" id="videos-next" class="slider-btn" aria-label="Video siguiente">
+			<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M9 18l6-6-6-6"></path>
+			</svg>
+		</button>
+	</div>
+</Section>
+
+<style>
+	#videos-track {
+		scrollbar-width: thin;
+		scrollbar-color: var(--color-border-strong) transparent;
+	}
+
+	.slider-btn {
+		display: flex;
+		height: 2.75rem;
+		width: 2.75rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: var(--radius-pill);
+		border: 1.5px solid var(--color-border-strong);
+		color: var(--color-ink);
+		transition: background-color 0.15s ease;
+	}
+
+	.slider-btn:hover {
+		background-color: var(--color-surface);
+	}
+</style>
+
+<script>
+	const track = document.getElementById('videos-track');
+	const prevBtn = document.getElementById('videos-prev');
+	const nextBtn = document.getElementById('videos-next');
+
+	if (track && prevBtn && nextBtn) {
+		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		const scrollByCard = (direction: number) => {
+			const card = track.querySelector<HTMLElement>(':scope > div');
+			const amount = (card?.offsetWidth ?? 300) + 24;
+			track.scrollBy({ left: direction * amount, behavior: reduceMotion ? 'auto' : 'smooth' });
+		};
+
+		prevBtn.addEventListener('click', () => scrollByCard(-1));
+		nextBtn.addEventListener('click', () => scrollByCard(1));
+	}
+
+	track?.querySelectorAll<HTMLButtonElement>('.video-card').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const id = btn.dataset.videoId;
+			if (!id) return;
+			const iframe = document.createElement('iframe');
+			iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+			iframe.title = btn.getAttribute('aria-label') ?? 'Video de YouTube';
+			iframe.className = 'h-full w-full rounded-card';
+			iframe.allow =
+				'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+			iframe.allowFullscreen = true;
+			btn.replaceWith(iframe);
+		});
+	});
+</script>
