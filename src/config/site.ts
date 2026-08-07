@@ -35,7 +35,7 @@ export const site = {
   nombreCompleto: 'Lic. Mariela Acotto',
   profesion: 'Psicóloga',
   // TODO: número de matrícula profesional real.
-  matricula: 'M.P. 00.000',
+  matricula: 'M.P. 950',
 
   // TODO: número de WhatsApp real, en formato internacional, solo dígitos (sin +, espacios ni guiones).
   whatsapp: '5493816281553',
@@ -60,10 +60,10 @@ export const site = {
   horarios: [
     {
       etiqueta: 'Lunes a viernes',
-      horario: '9:00 a 19:00',
+      horario: '11:00 a 20:00',
       dias: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      abre: '09:00',
-      cierra: '19:00',
+      abre: '11:00',
+      cierra: '20:00',
     },
   ] satisfies Horario[],
 
@@ -137,11 +137,6 @@ export interface FaqItem {
 
 export const faq: FaqItem[] = [
   {
-    pregunta: '¿Cómo es la primera consulta?',
-    respuesta:
-      'Escribís por WhatsApp contando brevemente qué te trae a la consulta y coordinamos un primer encuentro. Ese espacio inicial sirve para conocernos y pensar juntas cómo seguir.',
-  },
-  {
     pregunta: '¿Con qué enfoque trabaja?',
     respuesta:
       'El trabajo se apoya en el psicoanálisis y, según cada situación, en la psicoterapia focalizada: un abordaje breve y centrado en el motivo de consulta.',
@@ -149,7 +144,7 @@ export const faq: FaqItem[] = [
   {
     pregunta: '¿Atiende sesiones online?',
     respuesta:
-      'Sí, además del consultorio presencial hay disponibilidad de sesiones online por videollamada.',
+      'Sí, además del consultorio presencial hay disponibilidad de sesiones online.',
   },
   {
     pregunta: '¿Atiende adolescentes?',
@@ -158,11 +153,6 @@ export const faq: FaqItem[] = [
   {
     pregunta: '¿Dónde queda el consultorio?',
     respuesta: `El consultorio está en ${site.ciudad}, ${site.provincia}. La dirección exacta se comparte por WhatsApp al coordinar el turno.`,
-  },
-  {
-    pregunta: '¿Cómo coordino un turno?',
-    respuesta:
-      'Por WhatsApp es la vía más rápida: contás brevemente tu situación y se coordina día y horario según disponibilidad.',
   },
   {
     pregunta: '¿Realizan evaluaciones para instituciones escolares?',

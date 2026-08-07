@@ -15,7 +15,7 @@ const pasos = [
 	{
 		numero: '3',
 		titulo: 'Nos conocemos',
-		descripcion: 'La primera entrevista sirve para pensar juntas cómo seguir.',
+		descripcion: 'La primera entrevista sirve para pensar juntos cómo seguir.',
 	},
 ];
 ---
@@ -30,9 +30,9 @@ const pasos = [
 >
 	<ol class="grid gap-10 sm:grid-cols-3">
 		{pasos.map((paso) => (
-			<li class="text-center sm:text-left">
+			<li class="reveal-item group text-center sm:text-left">
 				<span
-					class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-terracota-dark font-display text-xl text-white sm:mx-0"
+					class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-terracota-dark font-display text-xl text-white transition-transform duration-200 group-hover:scale-110 sm:mx-0"
 					aria-hidden="true"
 				>
 					{paso.numero}

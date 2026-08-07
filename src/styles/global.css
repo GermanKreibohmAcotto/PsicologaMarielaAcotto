@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "@fontsource-variable/fraunces";
-@import "@fontsource-variable/inter";
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource-variable/manrope";
 
 /**
  * Paleta y tokens de diseño.
@@ -32,13 +32,16 @@
   --color-border: #bac4bc; /* divisores decorativos, no funcionales */
   --color-border-strong: #758d82; /* 3.25:1 sobre bg — bordes con significado */
 
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Source Serif 4 Variable", ui-serif, Georgia, serif;
 
   --radius-card: 1.25rem;
   --radius-pill: 999px;
 
-  --shadow-soft: 0 20px 40px -24px rgb(47 62 56 / 0.28);
+  /* Sombra tintada con el verde salvia (no gris puro) para que las tarjetas
+     "floten" en vez de verse sucias — mismo principio en todas las tarjetas. */
+  --shadow-soft: 0 20px 40px -24px rgb(74 107 93 / 0.35);
+  --shadow-lift: 0 28px 48px -20px rgb(74 107 93 / 0.45);
 }
 
 @layer base {
@@ -48,6 +51,27 @@
 
   html {
     scroll-behavior: smooth;
+    /* Firefox y Chromium recientes leen esto directo; Safari y Chromium más
+       viejos necesitan las reglas ::-webkit-scrollbar de más abajo. */
+    scrollbar-color: var(--color-verde) var(--color-surface-alt);
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--color-surface-alt);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-verde);
+    border-radius: var(--radius-pill);
+    border: 3px solid var(--color-surface-alt);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-verde-dark);
   }
 
   body {
@@ -111,5 +135,72 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+  }
+
+  /* Animación de entrada al hacer scroll. Sin JS (u OS sin soporte) el
+     elemento queda visible siempre — el estado "oculto" solo existe bajo
+     ".js-reveal", clase que agrega un script mínimo en el <head>. Así el
+     contenido nunca depende de que el JS llegue a correr. Curva "ease-out"
+     pronunciada (desacelera fuerte al final) para que la entrada se sienta
+     suave, no un salto lineal. */
+  .js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .js-reveal .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Dentro de una sección, los ítems marcados ".reveal-item" (tarjetas, pasos)
+     entran en cascada apoyados en el mismo trigger del padre — sin observers
+     extra: el retraso de cada uno viene de su posición (nth-child). */
+  .js-reveal .reveal .reveal-item {
+    opacity: 0;
+    transform: translateY(12px);
+    /* Propiedades separadas (no el shorthand "transition") a propósito: el
+       shorthand reinicia transition-delay a 0s con más especificidad que las
+       reglas ":nth-child" de abajo, y las pisaba por completo. */
+    transition-property: opacity, transform;
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .js-reveal .reveal.is-visible .reveal-item {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal-item:nth-child(2) {
+    transition-delay: 90ms;
+  }
+  .reveal-item:nth-child(3) {
+    transition-delay: 180ms;
+  }
+  .reveal-item:nth-child(4) {
+    transition-delay: 270ms;
+  }
+  .reveal-item:nth-child(5) {
+    transition-delay: 360ms;
+  }
+  .reveal-item:nth-child(6) {
+    transition-delay: 450ms;
+  }
+
+  /* Tarjetas y botones que "levantan" al pasar el mouse — misma sombra
+     tintada en verde salvia que --shadow-soft, más intensa. */
+  .hover-lift {
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
   }
 }

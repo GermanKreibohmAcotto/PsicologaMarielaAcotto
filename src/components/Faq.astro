@@ -7,7 +7,7 @@ import { faq } from '../config/site';
 	<div class="mx-auto max-w-3xl divide-y divide-border">
 		{faq.map((item) => (
 			<details name="faq" class="group py-5">
-				<summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+				<summary class="-mx-3 flex cursor-pointer list-none items-center justify-between gap-4 rounded-card px-3 py-1 transition-colors duration-200 hover:bg-surface-alt">
 					<h3 class="font-display text-lg font-medium text-ink">{item.pregunta}</h3>
 					<svg
 						aria-hidden="true"

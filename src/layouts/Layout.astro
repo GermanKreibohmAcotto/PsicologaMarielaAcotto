@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
+import sourceSerifLatin from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
 import { site } from '../config/site';
 
 interface Props {
@@ -56,7 +56,14 @@ const ogImageUrl = new URL('/og.jpg', Astro.site);
 		<!-- Fuente del hero (LCP): precargada porque es self-hosted y crítica para
 		     el primer render. El resto de las fuentes llega por la hoja de
 		     estilos, sin bloquear el render ni depender de un tercero. -->
-		<link rel="preload" as="font" type="font/woff2" href={frauncesLatin} crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href={sourceSerifLatin} crossorigin />
+
+		<!-- Habilita el estado inicial "oculto" de las animaciones de scroll
+		     (.reveal en global.css). Sin este script el contenido queda visible
+		     siempre — nunca depende de que el JS más abajo llegue a correr. -->
+		<script is:inline>
+			document.documentElement.classList.add('js-reveal');
+		</script>
 
 		{jsonLd.map((block) => (
 			<script type="application/ld+json" set:html={JSON.stringify(block)} is:inline />
@@ -66,3 +73,30 @@ const ogImageUrl = new URL('/og.jpg', Astro.site);
 		<slot />
 	</body>
 </html>
+
+<script>
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const revealEls = document.querySelectorAll<HTMLElement>('.reveal');
+	const revealAll = () => revealEls.forEach((el) => el.classList.add('is-visible'));
+
+	if (reduceMotion || !('IntersectionObserver' in window)) {
+		revealAll();
+	} else {
+		const observer = new IntersectionObserver(
+			(entries, obs) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+						obs.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.15, rootMargin: '0px 0px -80px 0px' }
+		);
+		revealEls.forEach((el) => observer.observe(el));
+
+		// Red de seguridad: si el observer nunca llega a disparar por el motivo
+		// que sea, el contenido no debe quedar invisible para siempre.
+		setTimeout(revealAll, 2000);
+	}
+</script>

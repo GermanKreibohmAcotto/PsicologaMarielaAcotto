@@ -15,7 +15,7 @@ const institucionales = servicios.filter((s) => s.audiencia === 'instituciones')
 >
 	<ul class="grid gap-6 sm:grid-cols-3">
 		{institucionales.map((s) => (
-			<li class="rounded-card bg-surface p-6 shadow-soft">
+			<li class="reveal-item hover-lift rounded-card bg-surface p-6 shadow-soft">
 				<h3 class="font-display text-lg text-ink">{s.titulo}</h3>
 				<p class="mt-2 text-sm text-ink-soft">{s.descripcion}</p>
 			</li>
