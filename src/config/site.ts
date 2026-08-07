@@ -70,7 +70,7 @@ export const site = {
   // Valor de reserva por si algo consulta "site.dominio" antes de que
   // Astro.site esté disponible. La fuente de verdad real es "site" en
   // astro.config.mjs — actualizá ese valor primero, y este para que coincida.
-  dominio: 'https://psicologamarielaacotto.vercel.app',
+  dominio: 'https://psicologa-mariela-acotto.vercel.app',
 
   redes: {
     // TODO: usuario real de Instagram, o dejar en null para ocultar el enlace.

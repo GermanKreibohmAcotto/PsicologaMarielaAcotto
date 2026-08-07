@@ -5,8 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // TODO: reemplazar por el dominio definitivo antes de desplegar (afecta canonical, sitemap y OG).
-  site: 'https://psicologamarielaacotto.vercel.app',
+  site: 'https://psicologa-mariela-acotto.vercel.app',
   output: 'static',
   trailingSlash: 'never',
   integrations: [sitemap()],
