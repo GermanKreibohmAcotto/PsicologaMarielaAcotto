@@ -14,7 +14,7 @@ import Contacto from '../components/Contacto.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFloat from '../components/WhatsAppFloat.astro';
 import { site } from '../config/site';
-import { buildPsychologistSchema, buildFaqSchema } from '../lib/schema';
+import { buildPsychologistSchema, buildFaqSchema, buildWebsiteSchema } from '../lib/schema';
 
 const title = `${site.nombreCompleto} — ${site.profesion} en ${site.ciudad}`;
 const description = `Psicoterapia para jóvenes y adultos desde el psicoanálisis y la psicoterapia focalizada. Consultorio en ${site.ciudad}, ${site.provincia}, o sesiones online.`;
@@ -24,7 +24,11 @@ const description = `Psicoterapia para jóvenes y adultos desde el psicoanálisi
 const siteUrl = Astro.site ?? new URL(site.dominio);
 ---
 
-<Layout title={title} description={description} jsonLd={[buildPsychologistSchema(siteUrl), buildFaqSchema()]}>
+<Layout
+	title={title}
+	description={description}
+	jsonLd={[buildWebsiteSchema(siteUrl), buildPsychologistSchema(siteUrl), buildFaqSchema()]}
+>
 	<SkipLink />
 	<Header />
 	<main id="contenido">

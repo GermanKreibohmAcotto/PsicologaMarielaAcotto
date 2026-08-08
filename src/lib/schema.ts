@@ -83,6 +83,23 @@ export function buildPsychologistSchema(siteUrl: URL | string): JsonLd {
   };
 }
 
+/**
+ * Identidad del sitio. Es la señal más fuerte que usa Google para decidir qué
+ * "nombre de sitio" mostrar en los resultados de búsqueda (más que
+ * og:site_name) — sin esto, Google puede llegar a mostrar el nombre del
+ * hosting (ej. "Vercel") en vez del nombre real del sitio.
+ */
+export function buildWebsiteSchema(siteUrl: URL | string): JsonLd {
+  const base = typeof siteUrl === 'string' ? siteUrl : siteUrl.toString();
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.nombreCompleto,
+    alternateName: `${site.nombre} — ${site.profesion}`,
+    url: base,
+  };
+}
+
 /** Preguntas frecuentes, generadas desde el mismo array que renderiza <Faq />. */
 export function buildFaqSchema(): JsonLd {
   return {
