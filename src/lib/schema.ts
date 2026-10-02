@@ -10,15 +10,25 @@ import { site, servicios, faq } from '../config/site';
 // así que se tipa como un registro abierto en vez de una interfaz estricta.
 type JsonLd = Record<string, unknown>;
 
-function buildAddress(): JsonLd | undefined {
-  if (!site.direccionExacta) return undefined;
-  return {
+/**
+ * PostalAddress mínima cuando NO se publica la calle: locality/region/country
+ * son datos públicos y no inventados. Si se conoce la dirección exacta,
+ * se agrega `streetAddress`. Fabricar una calle viola la política de Google
+ * (los datos estructurados deben ser verificables) y este sitio publica
+ * deliberadamente la dirección solo por WhatsApp, así que la versión locality-
+ * only es la correcta por defecto.
+ */
+function buildAddress(): JsonLd {
+  const address: JsonLd = {
     '@type': 'PostalAddress',
-    streetAddress: site.direccionExacta,
     addressLocality: site.ciudad,
     addressRegion: site.provincia,
     addressCountry: 'AR',
   };
+  if (site.direccionExacta) {
+    address.streetAddress = site.direccionExacta;
+  }
+  return address;
 }
 
 function buildGeo(): JsonLd | undefined {
@@ -53,17 +63,27 @@ export function buildPsychologistSchema(siteUrl: URL | string): JsonLd {
     image: new URL('/og.jpg', base).toString(),
     jobTitle: site.profesion,
     honorificPrefix: site.tratamiento,
-    hasCredential: site.matricula,
+    // Estructurado como EducationalOccupationalCredential (en vez de string
+    // suelto) para alinearse con el rango esperado por schema.org. Puro: en
+    // cuanto se carguen universidad y año, se pueden agregar más nodos.
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'license',
+      name: site.matricula,
+    },
     knowsAbout: [
       'Psicoanálisis',
       'Psicoterapia focalizada',
-      'Psicodiagnóstico',
+      'Psicología educacional',
+      'Terapia de pareja',
+      'Terapia familiar',
       'Salud mental de adolescentes',
       'Salud mental de adultos',
+      'Salud mental de adultos mayores',
     ],
-    // Si no hay dirección exacta publicada, se declara la ciudad como área de
-    // cobertura en vez de un domicilio puntual.
-    ...(address ? { address } : { areaServed: { '@type': 'City', name: site.ciudad } }),
+    // PostalAddress con locality-only es el "address" que Google acepta
+    // como señal de Local sin que invente una calle. Ver buildAddress() arriba.
+    address,
     ...(geo ? { geo } : {}),
     openingHoursSpecification: site.horarios.map((h) => ({
       '@type': 'OpeningHoursSpecification',
@@ -79,7 +99,19 @@ export function buildPsychologistSchema(siteUrl: URL | string): JsonLd {
         description: s.descripcion,
       },
     })),
-    ...(site.redes.instagram ? { sameAs: [site.redes.instagram] } : {}),
+    // sameAs: cada URL (perfiles sociales + GBP + directorios profesionales)
+    // confirma que la persona detrás del sitio también existe en esos
+    // sitios. Google lo usa como señal de verificación externa. Si no
+    // hay nada cargado todavía, omitir la propiedad entera (no
+    // devolver array vacío).
+    ...(() => {
+      const urls: string[] = [];
+      if (site.redes.instagram) urls.push(site.redes.instagram);
+      if (site.redes.linkedin) urls.push(site.redes.linkedin);
+      if (site.redes.googleBusiness) urls.push(site.redes.googleBusiness);
+      if (site.redes.directorios) urls.push(...site.redes.directorios);
+      return urls.length ? { sameAs: urls } : {};
+    })(),
   };
 }
 
@@ -97,6 +129,9 @@ export function buildWebsiteSchema(siteUrl: URL | string): JsonLd {
     name: site.nombreCompleto,
     alternateName: `${site.nombre} — ${site.profesion}`,
     url: base,
+    // Coincide con <html lang="es-AR">. Señal menor pero barata para
+    // motores multi-idioma.
+    inLanguage: 'es-AR',
   };
 }
 

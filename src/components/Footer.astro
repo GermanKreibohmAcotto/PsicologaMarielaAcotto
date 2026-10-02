@@ -3,7 +3,33 @@ import { site } from '../config/site';
 import { buildWhatsAppUrl } from '../lib/whatsapp';
 
 const anio = new Date().getFullYear();
-const href = buildWhatsAppUrl('Hola Mariela, me gustaría consultar por una sesión.');
+const whatsappHref = buildWhatsAppUrl('Hola Mariela, me gustaría consultar por una sesión.');
+// El número de WhatsApp se reusa como línea directa: una visitante con poca
+// batería o sin datos puede preferir llamar en vez de mensajear. El `tel:`
+// link respeta el formato internacional sin separadores (RFC 3966).
+const telHref = `tel:+${site.whatsapp}`;
+
+// Líneas de crisis verificadas contra fuentes oficiales del Ministerio de Salud
+// de Tucumán y Argentina.gob.ar. NO se incluye 107 (SAME) porque solo aplica
+// a CABA y PBA; para Tucumán corresponde el 911 como emergencias generales.
+
+/**
+ * Etiqueta legible para los directorios del footer. Mapea hostname → nombre
+ * conocido. Si la URL no está mapeada, muestra el hostname sin www. —
+ * nunca la URL cruda, que es ruido visual en un footer.
+ */
+const DIRECTORY_LABELS: Record<string, string> = {
+	'www.google.com': 'Google',
+	'buscopsi.com': 'Buscopsi',
+	'www.psicologos.com.ar': 'Psicólogos.com.ar',
+	'www.doctoralia.com.ar': 'Doctoralia',
+	'doctoralia.com.ar': 'Doctoralia',
+};
+
+function urlLabel(url: string): string {
+	const host = new URL(url).hostname;
+	return DIRECTORY_LABELS[host] ?? host.replace(/^www\./, '');
+}
 ---
 
 <footer class="theme-oscuro bg-ink text-bg">
@@ -16,8 +42,13 @@ const href = buildWhatsAppUrl('Hola Mariela, me gustaría consultar por una sesi
 			<div class="text-sm text-bg/70 sm:text-right">
 				<p>{site.ciudad}, {site.provincia}</p>
 				<p class="mt-1">
-					<a href={href} target="_blank" rel="noopener noreferrer" class="underline hover:text-white">
+					<a href={telHref} class="underline hover:text-white">
 						{site.whatsappDisplay}
+					</a>
+				</p>
+				<p class="mt-1">
+					<a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="underline hover:text-white">
+						Escribime por WhatsApp
 					</a>
 				</p>
 				{site.redes.instagram && (
@@ -27,10 +58,53 @@ const href = buildWhatsAppUrl('Hola Mariela, me gustaría consultar por una sesi
 						</a>
 					</p>
 				)}
+				{site.redes.linkedin && (
+					<p class="mt-1">
+						<a href={site.redes.linkedin} target="_blank" rel="noopener noreferrer" class="underline hover:text-white">
+							LinkedIn
+						</a>
+					</p>
+				)}
+				{site.redes.googleBusiness && (
+					<p class="mt-1">
+						<a href={site.redes.googleBusiness} target="_blank" rel="noopener noreferrer" class="underline hover:text-white">
+							Google
+						</a>
+					</p>
+				)}
+				{site.redes.directorios && site.redes.directorios.map((url) => (
+					<p class="mt-1">
+						<a href={url} target="_blank" rel="noopener noreferrer" class="underline hover:text-white">
+							{urlLabel(url)}
+						</a>
+					</p>
+				))}
 			</div>
 		</div>
-		<p class="mt-10 border-t border-bg/20 pt-6 text-xs text-bg/70">
+
+		<div class="mt-10 space-y-3 border-t border-bg/20 pt-6 text-xs text-bg/70">
+			<p>
+				Este espacio no reemplaza la atención de una emergencia. Si estás en una situación
+				de riesgo, llamá al <a href="tel:135" class="underline hover:text-white">135</a>
+				(línea nacional de salud mental), al <a href="tel:08001221555" class="underline hover:text-white">0800-122-1555</a>
+				(Telepsicología Tucumán, 24 h) o al <a href="tel:911" class="underline hover:text-white">911</a> (emergencias).
+			</p>
+			<p>
+				La información que compartas por WhatsApp para coordinar un turno se trata con
+				confidencialidad profesional y no se comparte con terceros.
+			</p>
+		</div>
+
+		<p class="mt-8 text-xs text-bg/70">
 			© {anio} {site.nombreCompleto}. Todos los derechos reservados.
+		</p>
+		<p class="mt-2 text-xs text-bg/70">
+			Sitio desarrollado por <a
+				href="https://www.linkedin.com/in/germankreibohmacotto/"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="underline hover:text-white">Germán Kreibohm Acotto</a
+			>.
 		</p>
 	</div>
 </footer>

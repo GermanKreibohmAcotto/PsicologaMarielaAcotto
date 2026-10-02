@@ -10,6 +10,8 @@ import { site } from '../config/site';
 		src={consultorio}
 		alt=""
 		width={1920}
+		widths={[640, 960, 1280, 1920]}
+		sizes="100vw"
 		loading="eager"
 		fetchpriority="high"
 		class="absolute inset-0 -z-20 h-full w-full scale-110 object-cover blur-sm"
@@ -32,7 +34,7 @@ import { site } from '../config/site';
 				Un espacio de escucha en {site.ciudad}, {site.provincia}
 			</h1>
 			<p class="mt-6 max-w-xl text-lg text-ink-soft">
-				Psicoterapia individual para jóvenes y adultos, desde el psicoanálisis y la psicoterapia
+				Psicoterapia individual para jóvenes, adultos y adultos mayores, desde el psicoanálisis y la psicoterapia
 				focalizada. De forma presencial o de manera online.
 			</p>
 			<div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">

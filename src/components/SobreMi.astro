@@ -11,23 +11,28 @@ import { site } from '../config/site';
 			src={mariela}
 			alt={`Retrato de ${site.nombreCompleto}`}
 			width={480}
+			widths={[320, 480, 640]}
+			sizes="(min-width: 1024px) 320px, 100vw"
 			class="w-full max-w-xs rounded-card shadow-soft lg:max-w-none"
 		/>
 		<div class="space-y-4 text-lg text-ink-soft">
 			<p>
-				Soy {site.profesion.toLowerCase()} ({site.matricula}), formada con orientación
-				psicoanalítica y formación complementaria en psicoterapia focalizada.
+				Soy {site.profesion.toLowerCase()} ({site.matricula}), formada en la Universidad Nacional de Tucumán
+				y especializada en psicología orientada a la educación.
 			</p>
 			<p>
-				Trabajo con jóvenes y adultos en consulta individual, y con instituciones escolares en
-				evaluaciones psicodiagnósticas, capacitación y asesoramiento.
+				Ejerzo la profesión hace 33 años. Hago psicoterapia focalizada individual, de pareja y
+				familiar, enmarcada en la clínica psicoanalítica.
+			</p>
+			<p>
+				Atiendo a jóvenes, adultos y adultos mayores en consulta particular —presencial u online—,
+				y trabajo con instituciones escolares en evaluaciones psicodiagnósticas, capacitación y
+				asesoramiento.
 			</p>
 			<p>
 				Cada proceso es distinto. Mi trabajo es sostener un espacio de confianza para que puedas
 				pensar lo que te pasa, a tu propio ritmo.
 			</p>
-			<!-- TODO: sumar formación académica específica (universidad, posgrados),
-			     años de trayectoria y especializaciones cuando estén disponibles. -->
 		</div>
 	</div>
 </Section>

@@ -43,7 +43,7 @@ export const site = {
   whatsappDisplay: '+54 9 381 6281553',
 
   // TODO: ciudad y provincia reales (se usan en textos y en el JSON-LD para SEO local).
-  ciudad: 'Yerba buena',
+  ciudad: 'Yerba Buena',
   provincia: 'Tucumán',
 
   // TODO: dirección completa. Se usa SOLO en el JSON-LD (no se muestra en el
@@ -55,7 +55,7 @@ export const site = {
 
   // TODO: coordenadas reales del consultorio (mejoran el posicionamiento en
   // Google Maps). Dejar en null si todavía no se cargó la dirección exacta.
-  geo: null as { lat: number; lng: number } | null,
+  geo: { lat: -26.8102154, lng: -65.2977502 } as { lat: number; lng: number } | null,
 
   horarios: [
     {
@@ -75,6 +75,31 @@ export const site = {
   redes: {
     // TODO: usuario real de Instagram, o dejar en null para ocultar el enlace.
     instagram: null as string | null,
+    linkedin: 'https://www.linkedin.com/in/mariela-acotto-30b109345/' as string | null,
+    /**
+     * Google Business Profile canónico. Es la URL que aparece al compartir
+     * el perfil desde Google Maps. Es distinto de los directorios de
+     * terceros (Buscopsi, Doctoralia) porque es EL perfil oficial de
+     * Google — pero a nivel schema `sameAs` se concatenan igual.
+     */
+    googleBusiness:
+      'https://www.google.com/maps/place/Psic%C3%B3loga+Lic.+Mariela+Acotto/@-26.8102106,-65.3003251,17z/data=!3m1!4b1!4m6!3m5!1s0x942243001df905f1:0x43fcb4c3cdfcc489!8m2!3d-26.8102154!4d-65.2977502!16s%2Fg%2F11zdg_yypl' as string | null,
+    /**
+     * Perfiles profesionales en directorios públicos. Cada URL alimenta:
+     * - el JSON-LD `sameAs` del bloque Psychologist (señal de autoridad
+     *   externa para Google — confirma que Mariela existe más allá de
+     *   este sitio)
+     * - los links visibles en el footer
+     *
+     * Mantener este array en null o vacío para ocultar todos los enlaces
+     * a la vez. Agregar una URL acá propaga a schema + footer sin tocar
+     * otro archivo.
+     */
+    directorios: [
+      'https://buscopsi.com/psicologo/mariela-acotto/',
+      'https://www.psicologos.com.ar/psicologa-lic-mariela-acotto-F1506C1041D',
+      // TODO: agregar URL de Doctoralia cuando esté publicada.
+    ] as string[] | null,
   },
 } as const;
 
@@ -82,6 +107,14 @@ export interface Servicio {
   id: string;
   titulo: string;
   descripcion: string;
+  /**
+   * Descripción alternativa para la sección #instituciones. El componente
+   * `Instituciones.astro` prefiere este campo cuando existe; si está ausente,
+   * usa `descripcion`. Sirve para diferenciar copy de un mismo servicio
+   * entre audiencia individual (pacientes) y B2B (escuelas), que tienen
+   * información y decisiones diferentes.
+   */
+  descripcionInstitucional?: string;
   audiencia: 'personas' | 'instituciones';
   mensajeWhatsapp: string;
 }
@@ -91,9 +124,25 @@ export const servicios: Servicio[] = [
     id: 'terapia-individual',
     titulo: 'Psicoterapia individual',
     descripcion:
-      'Espacio de escucha y trabajo personal para jóvenes y adultos, desde el psicoanálisis y la psicoterapia focalizada.',
+      'Espacio de escucha y trabajo personal para jóvenes, adultos y adultos mayores, desde el psicoanálisis y la psicoterapia focalizada.',
     audiencia: 'personas',
     mensajeWhatsapp: 'Hola Mariela, me gustaría consultar por una sesión.',
+  },
+  {
+    id: 'terapia-pareja',
+    titulo: 'Terapia de pareja',
+    descripcion:
+      'Espacio para pensar juntos lo que les pasa, desde la clínica psicoanalítica y la psicoterapia focalizada.',
+    audiencia: 'personas',
+    mensajeWhatsapp: 'Hola Mariela, quería consultar por terapia de pareja.',
+  },
+  {
+    id: 'terapia-familiar',
+    titulo: 'Terapia familiar',
+    descripcion:
+      'Acompañamiento profesional para abordar situaciones de la dinámica familiar, en un encuadre psicoanalítico.',
+    audiencia: 'personas',
+    mensajeWhatsapp: 'Hola Mariela, quería consultar por terapia familiar.',
   },
   {
     id: 'sesiones-online',
@@ -108,6 +157,8 @@ export const servicios: Servicio[] = [
     titulo: 'Evaluaciones psicodiagnósticas',
     descripcion:
       'Evaluaciones psicodiagnósticas para instituciones escolares, como parte de procesos de admisión, seguimiento u orientación.',
+    descripcionInstitucional:
+      'Proceso de evaluación con entrevistas, observación y pruebas proyectivas, con informe escrito y devolución presencial a la familia y al equipo institucional. Habitualmente se coordina en dos o tres encuentros.',
     audiencia: 'instituciones',
     mensajeWhatsapp:
       'Hola, escribo desde una institución educativa por evaluaciones psicodiagnósticas.',
@@ -117,6 +168,8 @@ export const servicios: Servicio[] = [
     titulo: 'Capacitación institucional',
     descripcion:
       'Espacios de formación para equipos docentes y directivos sobre temáticas de salud mental y desarrollo psicológico.',
+    descripcionInstitucional:
+      'Talleres y jornadas para equipos docentes y directivos, ajustados a la necesidad del establecimiento: duración, frecuencia y formato (charla, taller o serie) se acuerdan previamente.',
     audiencia: 'instituciones',
     mensajeWhatsapp: 'Hola, quería consultar por capacitaciones para nuestra institución.',
   },
@@ -125,6 +178,8 @@ export const servicios: Servicio[] = [
     titulo: 'Asesoramiento institucional',
     descripcion:
       'Acompañamiento a instituciones escolares en el abordaje de situaciones y consultas de índole psicológica.',
+    descripcionInstitucional:
+      'Acompañamiento profesional para pensar situaciones puntuales de la dinámica institucional: cómo recibir una consulta, encuadrar una conversación con familias o derivar cuando hace falta.',
     audiencia: 'instituciones',
     mensajeWhatsapp: 'Hola, quería consultar por asesoramiento institucional.',
   },
@@ -163,6 +218,21 @@ export const faq: FaqItem[] = [
     pregunta: '¿Cuáles son los honorarios y las formas de pago?',
     respuesta:
       'Esa información se conversa por WhatsApp, ya que puede variar según el tipo de consulta.',
+  },
+  {
+    pregunta: '¿Cuánto dura cada sesión y con qué frecuencia se asiste?',
+    respuesta:
+      'Las sesiones individuales tienen una duración aproximada de 50 minutos. La frecuencia habitual es una vez por semana, aunque puede ajustarse según el caso.',
+  },
+  {
+    pregunta: '¿Desde qué edad atendés?',
+    respuesta:
+      'Atiendo jóvenes, adultos y adultos mayores. La edad mínima concreta se conversa al inicio según la situación, ya que depende del motivo de consulta y del grado de autonomía de quien consulta.',
+  },
+  {
+    pregunta: '¿Aceptás obra social o prepaga?',
+    respuesta:
+      'La atención es de modalidad particular. Si tenés cobertura por obra social o prepaga, puedo orientarte sobre cómo pedir reintegro según tu plan, o derivarte a un colega que sí trabaje con tu cobertura.',
   },
 ];
 
