@@ -16,9 +16,10 @@ interface Props {
 	variant?: 'primary' | 'terracota' | 'outline';
 	size?: 'md' | 'sm';
 	class?: string;
+	title?: string;
 }
 
-const { mensaje, variant = 'primary', size = 'md', class: className = '' } = Astro.props;
+const { mensaje, variant = 'primary', size = 'md', class: className = '', title } = Astro.props;
 const href = buildWhatsAppUrl(mensaje);
 
 const variantClasses: Record<string, string> = {
@@ -39,6 +40,7 @@ const iconSizeClasses = size === 'sm' ? 'h-4 w-4' : 'h-5 w-5';
 	href={href}
 	target="_blank"
 	rel="noopener noreferrer"
+	title={title}
 	class:list={[
 		'inline-flex min-h-[44px] items-center justify-center rounded-pill font-semibold shadow-soft transition duration-200 hover:-translate-y-0.5 hover:shadow-lift active:translate-y-0',
 		variantClasses[variant],

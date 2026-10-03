@@ -53,6 +53,9 @@ const ogImageUrl = new URL('/og.jpg', Astro.site);
 
 		<!-- Favicon -->
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/favicon.svg" />
+		<meta name="msapplication-TileImage" content="/favicon.svg" />
+		<meta name="msapplication-TileColor" content="#4A6B5D" />
 
 		<!-- Fuente del hero (LCP): precargada porque es self-hosted y crítica para
 		     el primer render. El resto de las fuentes llega por la hoja de
