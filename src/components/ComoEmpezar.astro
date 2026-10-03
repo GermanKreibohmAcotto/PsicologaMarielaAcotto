@@ -3,17 +3,14 @@ import Section from './Section.astro';
 
 const pasos = [
 	{
-		numero: '1',
 		titulo: 'Escribís por WhatsApp',
 		descripcion: 'Contás brevemente qué te trae a la consulta.',
 	},
 	{
-		numero: '2',
 		titulo: 'Coordinamos un primer encuentro',
 		descripcion: 'Buscamos día y horario según disponibilidad, presencial u online.',
 	},
 	{
-		numero: '3',
 		titulo: 'Nos conocemos',
 		descripcion: 'La primera entrevista sirve para pensar juntos cómo seguir.',
 	},
@@ -30,14 +27,9 @@ const pasos = [
 >
 	<ol class="grid gap-10 sm:grid-cols-3">
 		{pasos.map((paso) => (
-			<li class="reveal-item group text-center sm:text-left">
-				<span
-					class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-terracota-dark font-display text-xl text-white transition-transform duration-200 group-hover:scale-110 sm:mx-0"
-					aria-hidden="true"
-				>
-					{paso.numero}
-				</span>
-				<h3 class="mt-4 font-display text-lg text-ink">{paso.titulo}</h3>
+			<li class="reveal-item text-center sm:text-left">
+				<span class="mx-auto block h-1 w-10 bg-terracota-dark sm:mx-0" aria-hidden="true"></span>
+				<h3 class="mt-5 font-display text-lg text-ink">{paso.titulo}</h3>
 				<p class="mt-2 text-ink-soft">{paso.descripcion}</p>
 			</li>
 		))}

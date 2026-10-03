@@ -26,7 +26,7 @@ const headingId = `${id}-titulo`;
 
 <section
 	id={id}
-	class:list={['reveal scroll-mt-24 py-16 md:py-24 lg:py-32', tonoClase]}
+	class:list={['reveal scroll-mt-24 py-20 md:py-32 lg:py-40', tonoClase]}
 	aria-labelledby={headingId}
 >
 	<div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
@@ -34,7 +34,7 @@ const headingId = `${id}-titulo`;
 			{eyebrow && (
 				<p
 					class:list={[
-						'mb-4 inline-flex items-center gap-2 rounded-pill bg-surface-alt px-3.5 py-1.5 text-xs font-semibold tracking-wide text-verde uppercase',
+						'mb-4 inline-flex items-center gap-2 whitespace-nowrap rounded-pill bg-surface-alt px-3.5 py-1.5 text-xs font-semibold tracking-wide text-verde uppercase',
 						{ 'mx-auto': centrado },
 					]}
 				>
@@ -42,7 +42,7 @@ const headingId = `${id}-titulo`;
 					{eyebrow}
 				</p>
 			)}
-			<h2 id={headingId} class="font-display text-3xl text-ink md:text-4xl">{titulo}</h2>
+			<h2 id={headingId} class="font-display text-3xl text-ink md:text-4xl lg:text-5xl">{titulo}</h2>
 			{descripcion && <p class="mt-4 text-lg text-ink-soft">{descripcion}</p>}
 		</header>
 		<div class="mt-10 md:mt-14">
