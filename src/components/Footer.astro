@@ -82,13 +82,28 @@ function urlLabel(url: string): string {
 			</div>
 		</div>
 
-		<div class="mt-10 space-y-3 border-t border-bg/20 pt-6 text-xs text-bg/70">
-			<p>
-				Este espacio no reemplaza la atención de una emergencia. Si estás en una situación
-				de riesgo, llamá al <a href="tel:135" class="underline hover:text-white">135</a>
-				(línea nacional de salud mental), al <a href="tel:08001221555" class="underline hover:text-white">0800-122-1555</a>
-				(Telepsicología Tucumán, 24 h) o al <a href="tel:911" class="underline hover:text-white">911</a> (emergencias).
-			</p>
+		<div class="mt-10 space-y-4 border-t border-bg/20 pt-6 text-xs text-bg/70">
+			<div class="border-l-2 border-terracota pl-3">
+				<p class="flex items-start gap-2">
+					<svg
+						aria-hidden="true"
+						focusable="false"
+						viewBox="0 0 24 24"
+						class="mt-0.5 h-4 w-4 shrink-0 text-terracota"
+						fill="currentColor"
+					>
+						<path d="M12 2 L22 20 L2 20 Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"></path>
+						<line x1="12" y1="9" x2="12" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line>
+						<circle cx="12" cy="17.5" r="1" fill="currentColor"></circle>
+					</svg>
+					<span>
+						Este espacio no reemplaza la atención de una emergencia. Si estás en una situación
+						de riesgo, llamá al <a href="tel:135" class="underline hover:text-white">135</a>
+						(línea nacional de salud mental), al <a href="tel:08001221555" class="underline hover:text-white">0800-122-1555</a>
+						(Telepsicología Tucumán, 24 h) o al <a href="tel:911" class="underline hover:text-white">911</a> (emergencias).
+					</span>
+				</p>
+			</div>
 			<p>
 				La información que compartas por WhatsApp para coordinar un turno se trata con
 				confidencialidad profesional y no se comparte con terceros.
@@ -108,3 +123,76 @@ function urlLabel(url: string): string {
 		</p>
 	</div>
 </footer>
+
+<button
+	type="button"
+	class="back-to-top"
+	aria-label="Volver al inicio de la página"
+>
+	<svg
+		aria-hidden="true"
+		focusable="false"
+		viewBox="0 0 24 24"
+		class="h-5 w-5"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	>
+		<polyline points="6 14 12 8 18 14"></polyline>
+	</svg>
+</button>
+
+<style>
+	.back-to-top {
+		position: fixed;
+		left: 2rem;
+		bottom: calc(2rem + env(safe-area-inset-bottom));
+		z-index: 30;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: var(--radius-pill);
+		background-color: var(--color-bg);
+		color: var(--color-ink);
+		border: 1px solid var(--color-border-strong);
+		box-shadow: var(--shadow-soft);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s ease, transform 0.2s ease;
+		transform: translateY(8px);
+	}
+	.back-to-top.is-visible {
+		opacity: 1;
+		pointer-events: auto;
+		transform: translateY(0);
+	}
+	.back-to-top:hover {
+		background-color: var(--color-surface-alt);
+		transform: translateY(-2px);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.back-to-top {
+			transition: opacity 0.01ms;
+		}
+	}
+</style>
+
+<script>
+	const btn = document.querySelector<HTMLButtonElement>('.back-to-top');
+	if (btn) {
+		const toggle = () => {
+			const visible = window.scrollY > 600;
+			btn.classList.toggle('is-visible', visible);
+		};
+		toggle();
+		window.addEventListener('scroll', toggle, { passive: true });
+		btn.addEventListener('click', () => {
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+		});
+	}
+</script>

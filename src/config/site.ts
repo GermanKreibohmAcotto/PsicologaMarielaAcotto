@@ -108,6 +108,12 @@ export interface Servicio {
   titulo: string;
   descripcion: string;
   /**
+   * Path SVG (escala 24x24) para el ícono que distingue visualmente este
+   * servicio en su card. Estilo monocromático con stroke 1.75, consistente
+   * con la familia Phosphor Regular. Si se omite, la card no muestra ícono.
+   */
+  iconPath?: string;
+  /**
    * Descripción alternativa para la sección #instituciones. El componente
    * `Instituciones.astro` prefiere este campo cuando existe; si está ausente,
    * usa `descripcion`. Sirve para diferenciar copy de un mismo servicio
@@ -125,6 +131,7 @@ export const servicios: Servicio[] = [
     titulo: 'Psicoterapia individual',
     descripcion:
       'Espacio de escucha y trabajo personal para jóvenes, adultos y adultos mayores, desde el psicoanálisis y la psicoterapia focalizada.',
+    iconPath: 'M19.5 21 L19.5 19.5 C19.5 17 17.5 15 15 15 L9 15 C6.5 15 4.5 17 4.5 19.5 L4.5 21 M12 12 C14.4853 12 16.5 9.98528 16.5 7.5 C16.5 5.01472 14.4853 3 12 3 C9.51472 3 7.5 5.01472 7.5 7.5 C7.5 9.98528 9.51472 12 12 12 Z',
     audiencia: 'personas',
     mensajeWhatsapp: 'Hola Mariela, me gustaría consultar por una sesión.',
   },
@@ -133,6 +140,7 @@ export const servicios: Servicio[] = [
     titulo: 'Terapia de pareja',
     descripcion:
       'Espacio para pensar juntos lo que les pasa, desde la clínica psicoanalítica y la psicoterapia focalizada.',
+    iconPath: 'M19.5 21 L19.5 19.5 C19.5 17 17.5 15 15 15 C14.3 15 13.6 15.3 13 15.7 M9 6 C11.4853 6 13.5 8.01472 13.5 10.5 C13.5 12.9853 11.4853 15 9 15 C6.51472 15 4.5 12.9853 4.5 10.5 C4.5 8.01472 6.51472 6 9 6 Z M15 6 C17.4853 6 19.5 8.01472 19.5 10.5 C19.5 12.9853 17.4853 15 15 15 C14.4 15 13.8 14.9 13.3 14.7',
     audiencia: 'personas',
     mensajeWhatsapp: 'Hola Mariela, quería consultar por terapia de pareja.',
   },
@@ -141,6 +149,7 @@ export const servicios: Servicio[] = [
     titulo: 'Terapia familiar',
     descripcion:
       'Acompañamiento profesional para abordar situaciones de la dinámica familiar, en un encuadre psicoanalítico.',
+    iconPath: 'M3 11 L3 21 L21 21 L21 11 M3 11 L12 3 L21 11 M9 21 L9 14 L15 14 L15 21',
     audiencia: 'personas',
     mensajeWhatsapp: 'Hola Mariela, quería consultar por terapia familiar.',
   },
@@ -149,6 +158,7 @@ export const servicios: Servicio[] = [
     titulo: 'Sesiones online',
     descripcion:
       'La misma escucha profesional por videollamada, para quienes prefieren o necesitan un encuentro a distancia.',
+    iconPath: 'M3 6 L17 6 C18.1046 6 19 6.89543 19 8 L19 16 C19 17.1046 18.1046 18 17 18 L3 18 C1.89543 18 1 17.1046 1 16 L1 8 C1 6.89543 1.89543 6 3 6 Z M21 9 L21 15 L23 15 L23 9 L21 9 Z M11 11.5 L11 12.5 C11 12.7761 11.2239 13 11.5 13 L12.5 13 C12.7761 13 13 12.7761 13 12.5 L13 11.5 C13 11.2239 12.7761 11 12.5 11 L11.5 11 C11.2239 11 11 11.2239 11 11.5 Z',
     audiencia: 'personas',
     mensajeWhatsapp: 'Hola Mariela, quería consultar por sesiones online.',
   },
@@ -157,6 +167,7 @@ export const servicios: Servicio[] = [
     titulo: 'Evaluaciones psicodiagnósticas',
     descripcion:
       'Evaluaciones psicodiagnósticas para instituciones escolares, como parte de procesos de admisión, seguimiento u orientación.',
+    iconPath: 'M6 3 L18 3 C19.1046 3 20 3.89543 20 5 L20 21 L17 18 L6 18 C4.89543 18 4 17.1046 4 16 L4 5 C4 3.89543 4.89543 3 6 3 Z M8 8 L16 8 M8 12 L13 12',
     descripcionInstitucional:
       'Proceso de evaluación con entrevistas, observación y pruebas proyectivas, con informe escrito y devolución presencial a la familia y al equipo institucional. Habitualmente se coordina en dos o tres encuentros.',
     audiencia: 'instituciones',
@@ -168,6 +179,7 @@ export const servicios: Servicio[] = [
     titulo: 'Capacitación institucional',
     descripcion:
       'Espacios de formación para equipos docentes y directivos sobre temáticas de salud mental y desarrollo psicológico.',
+    iconPath: 'M3 5 L21 5 L21 17 L17 17 L13 21 L9 17 L3 17 Z M12 8 L12 12 M12 15 L12 15.01',
     descripcionInstitucional:
       'Talleres y jornadas para equipos docentes y directivos, ajustados a la necesidad del establecimiento: duración, frecuencia y formato (charla, taller o serie) se acuerdan previamente.',
     audiencia: 'instituciones',
@@ -178,6 +190,7 @@ export const servicios: Servicio[] = [
     titulo: 'Asesoramiento institucional',
     descripcion:
       'Acompañamiento a instituciones escolares en el abordaje de situaciones y consultas de índole psicológica.',
+    iconPath: 'M9 11 L15 11 M5 7 L19 7 L19 17 L5 17 Z M5 7 C5 5 6 4 7 4 L17 4 C18 4 19 5 19 7',
     descripcionInstitucional:
       'Acompañamiento profesional para pensar situaciones puntuales de la dinámica institucional: cómo recibir una consulta, encuadrar una conversación con familias o derivar cuando hace falta.',
     audiencia: 'instituciones',

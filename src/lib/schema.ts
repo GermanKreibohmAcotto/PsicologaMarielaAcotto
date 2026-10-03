@@ -127,7 +127,7 @@ export function buildWebsiteSchema(siteUrl: URL | string): JsonLd {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: site.nombreCompleto,
-    alternateName: `${site.nombre} — ${site.profesion}`,
+    alternateName: `${site.nombre} · ${site.profesion}`,
     url: base,
     // Coincide con <html lang="es-AR">. Señal menor pero barata para
     // motores multi-idioma.
