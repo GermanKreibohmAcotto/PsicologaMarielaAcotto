@@ -27,3 +27,6 @@ pnpm-debug.log*
 psicologa-mariela-acotto.vercel.app-audit
 
 .atl
+
+# opencode runtime metadata (skills, scripts, agent cache)
+.opencode/
